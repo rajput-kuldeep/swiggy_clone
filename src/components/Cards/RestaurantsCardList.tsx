@@ -1,9 +1,10 @@
-
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Weather } from '@/utils/types';
+import { Weather } from '@/data/types';
 import RestaurantCard from './RestaurantCard';
 import Shimmer from './Shimmer';
 import axios from 'axios';
+
 
 
 
@@ -16,33 +17,39 @@ const RestaurantsCardList = () => {
   const [error, setError] = useState<string | null>(null);
 
 
+  console.log('component rendered', restaurants)
+
+
+
+
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
         console.log('Fetching restaurants...');
-        const response = await axios.get('https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.7040592&lng=77.10249019999999&collection=83667')
+        const response = await axios.get('https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.65200&lng=77.16630&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING');
         console.log('API response data:', response.data);
-        if (response.data.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants && Array.isArray(response.data.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants)) {
-          console.log('Setting restaurants state');
-          setRestaurants(response?.data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-          setFilteredRestaurant(response?.data?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        const restaurantsData = response.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
+        if (restaurantsData && Array.isArray(restaurantsData)) {
           
+          setRestaurants(restaurantsData);
+          setFilteredRestaurant(restaurantsData);
         } else {
-          console.error("Invalid data format received from API", response.data);
           
           setError("Invalid data format received from API");
         }
       } catch (error) {
-        setError('Error fetching restaurants');
-        console.error('Error fetching restaurants:', error);
-      } finally {
+        
+       
+          setError('Error fetching restaurants');
+          
+        }
+       finally {
         setLoading(false);
-        console.log('Finished fetching restaurants');
         
       }
     };
 
-    fetchRestaurants();
+  fetchRestaurants();
   }, []);
 
 
@@ -64,11 +71,12 @@ const RestaurantsCardList = () => {
 
 
 
-
-  return restaurants?.length === 0 ? <Shimmer /> : (
+ return (
+ 
     <div>
+      
 
-        <div className='w-full mt-5 p-2'>
+        <div className='w-full mt-5 p-4'>
           <input type="text" value={searchText} className='border-1 bg-orange-600' onChange={((e) => setSearchText(e.target.value))} />
           <button className='bg-orange-600 p-1 rounded-xl' onClick={(() => {
             const filteredRestaurants = restaurants.filter((restaurant) => restaurant.info.name.toLowerCase().includes(searchText.toLowerCase()))
@@ -76,11 +84,12 @@ const RestaurantsCardList = () => {
             })}>Search</button>
         </div>
 
-      <div className='flex flex-wrap gap-5 p-10 items-center justify-center'>
+      <div className='flex flex-wrap gap-5 mb-10 px-20 items-center justify-center'>
         {filteredRestaurant?.map((restaurant) => (
-          <div className='' key={restaurant.info.id}>
-            <RestaurantCard key={restaurant.info.id} restaurant={restaurant} />
-          </div>
+
+            <Link key={restaurant.info.id} to={'/restaurants/' + restaurant.info.id}>
+               <RestaurantCard  restaurant={restaurant} /> </Link>
+          
         ))}
       </div>
     </div>

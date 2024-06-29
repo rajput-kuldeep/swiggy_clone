@@ -1,8 +1,8 @@
 
-import './App.css'
-import RestaurantsCardList from './components/Cards/RestaurantsCardList'
+
 import Header from './components/Header'
 
+import { Outlet } from 'react-router-dom'
 
 
 function App() {
@@ -11,7 +11,10 @@ function App() {
   return (
     <>
       <Header/>
-      <RestaurantsCardList />
+     <Outlet />
+     
+      
+    
     </>
   )
 }
