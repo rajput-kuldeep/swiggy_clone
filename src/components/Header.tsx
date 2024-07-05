@@ -1,52 +1,60 @@
 import { NavLink } from 'react-router-dom'
 import useOnlineStatus from '@/utils/useOnlineStatus'
+import { useSelector } from 'react-redux'
+import { useState } from 'react'
+import LoginForm from './Signup/LoginForm'
 
 
-
-
-const Header:React.FC = () => {
+const Header: React.FC = () => {
 
     const onlineStatus = useOnlineStatus()
 
+    const cartItems = useSelector((store) => store.cart.items)
 
-    
+    console.log("this is cartItems", cartItems)
+
+    const [login, setLogin] = useState<boolean>(false)
+
 
     return (
         <>
-        <div className="w-full flex items-center justify-between px-10 py-2 shadow-xl">
-        <div>
-            <img src="logo.png" alt="" className="w-20 rounded-[100%]"/>
-        </div>
-        <div>
+            <div className="w-full flex items-center justify-between px-10 py-2 shadow-xl">
+                <div>
+                    <img src="logo.png" alt="" className="w-20 rounded-[100%]" />
+                </div>
+                <div>
 
-           <ul className="flex gap-12 text-lg font-semibold ">
-            <li>
-                <h1>status : {onlineStatus ? 'online' : 'offline'}</h1>
-            </li>
+                    <ul className="flex gap-12 text-lg font-semibold ">
+                        <li>
+                            <h1>status : {onlineStatus ? 'online' : 'offline'}</h1>
+                        </li>
+
+                        <li><NavLink to='/'>Swigy Corporate</NavLink> </li>
+
+
+                        <li>
+                            <NavLink to='/Search'>Search</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to='offers'>Offers</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to='help'>Help</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to='signin' onClick={() => setLogin(true)} >Sign In</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to='Cart'>Cart -{cartItems.length}</NavLink>
+                        </li>
+
+                    </ul>
+                </div>
+                {login && <LoginForm setLogin={setLogin}  />}
+            </div>
+
             
-                <li><NavLink to='/'>Swigy Corporate</NavLink> </li>
-                
-            
-             <li>
-                <NavLink to='/Search'>Search</NavLink>
-            </li>
-            <li>
-                <NavLink to='offers'>Offers</NavLink>
-            </li>
-            <li>
-                <NavLink to='help'>Help</NavLink>
-            </li>
-            <li>
-                <NavLink to='signin'>Sign In</NavLink>
-            </li>
-            <li>
-                <NavLink to='Cart'>Cart</NavLink>
-            </li> 
-            
-            
-           </ul>
-        </div>
-        </div>
+           
         </>
     )
 }

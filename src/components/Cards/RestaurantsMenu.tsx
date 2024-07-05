@@ -9,12 +9,13 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 
-import { Star } from "lucide-react";
-import { CDN_URL } from "@/data/types";
-import Shimmer from "./Shimmer";
+
 import { useContext } from "react";
 import UserContext from "@/utils/UserContext";
-
+import MenuCard from "./MenuCard";
+import Shimmer from "./Shimmer";
+import MenuHeader from "./MenuHeader";
+import { Card } from "../ui/card";
 
 
 
@@ -24,7 +25,7 @@ const RestaurantsMenu = () => {
   const { resId } = useParams()
 
   const data = useContext(UserContext)
-  console.log("this is userContext loggedInUser",data.loggedIn)
+  console.log("this is userContext loggedInUser", data.loggedIn)
 
 
 
@@ -34,15 +35,50 @@ const RestaurantsMenu = () => {
 
   if (resInfo === null) return <Shimmer />
 
-  const categories = resInfo.filter((cards) => cards?.card?.card["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory")
+  // const categories = resInfo?.card?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter((cards) => cards?.card?.card["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory")
 
-  // console.log("this is categories", categories)
-  if (!categories) return <div>No categories found</div>
+
+
+  const categories = resInfo?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter((cards) => cards?.card?.card["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory")
+
+
+  console.log("this is resinfo", typeof categories, categories)
+
+  const menuHeader = resInfo?.data?.cards[2]?.card?.card?.info
+
+  console.log("this is menuHeader", typeof menuHeader, menuHeader)
 
 
   return (
-    <>
+    < div className="w-[60%] m-auto">
+      <div className="flex m-auto relative mt-20 rounded-xl">
+        <div className=" w-full shadow-2xl">
+          <div>
+            <h1 className="text-2xl font-bold mb-5 pl-6">{menuHeader?.name}</h1>
+          </div>
+          <div className="w-full shadow-2xl rounded-xl pl-6 border-[1px] py-5 flex flex-col gap-1 mb-5">
+            <div className="flex gap-3 font-bold">
+              <p>{menuHeader?.avgRating}</p>
+              <p>{(menuHeader?.totalRatingsString)}</p>
+              <p>. {menuHeader?.costForTwoMessage}</p>
+            </div>
+            <p className="font-bold text-orange-600">{menuHeader?.cuisines?.join(",")}</p>
+            <ul className="flex flex-col gap-3">
+              <li className="font-bold ">Outlet <span className="text-xs font-normal ml-4 text-gray-600">{menuHeader?.areaName}</span></li>
+              <li className="font-bold">{menuHeader?.sla.slaString}</li>
+            </ul>
+            <div className="border-[1px]"></div>
+            <div className="text-sm font-medium text-gray-500 flex gap-2">
+              <p>{menuHeader?.sla.lastMileTravelString}</p>
+              <p>₹{(menuHeader?.feeDetails.totalFee) / 100}Delivery fee will apply</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
       <div>
+
         {
           categories.map((item) => (
             <div key={item.card.card.title} className="bg-blue">
@@ -50,33 +86,12 @@ const RestaurantsMenu = () => {
 
               <Accordion type="single" collapsible>
                 <AccordionItem value="item-1">
-                  <AccordionTrigger>{item.card.card.title}</AccordionTrigger>
+                  <div className="mt-10 px-5">
+                    <AccordionTrigger>{item.card.card.title} ({item.card.card.itemCards.length})</AccordionTrigger>
+                  </div>
                   <AccordionContent>
-                    <div>
-                      {
-                        item.card.card.itemCards.map((item) => (
-                          <div className="flex justify-center ">
-                            <div className='flex justify-between  mb-5 w-[60%] h-52 bg-gray-200 rounded-xl object-cover hover:scale-95 hover:duration-200'>
-                              <div>
-                                <h1 className="font-bold text-[#414449] text-lg leading-relaxed">{item.card.info.name}</h1>
-                                <p>₹ {item.card.info.price / 100}</p>
 
-                                <p> <Star strokeWidth={2.25} className="bg-green-500 text-green-600" /> {item.card.info.ratings.aggregatedRating.rating}</p>
-                                <p>{item.card.info.description}</p>
-                              </div>
-                              <div className=''>
-                                <img
-                                  src={CDN_URL + item.card.info.imageId}
-                                  alt={item.card.info.name}
-                                  className='object-cover bg-cover w-full h-36 rounded-xl '
-                                />
-
-                              </div>
-                            </div>
-                          </div>
-                        ))
-                      }
-                    </div>
+                    <MenuCard items={item.card.card.itemCards} />
 
 
                   </AccordionContent>
@@ -90,7 +105,7 @@ const RestaurantsMenu = () => {
         }
 
       </div>
-    </>
+    </div>
   )
 };
 

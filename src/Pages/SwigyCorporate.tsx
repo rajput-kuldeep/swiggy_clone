@@ -1,4 +1,5 @@
 
+import HomePageTopBanner from "@/components/Cards/HomePageTopBanner"
 import RestaurantsCardList from "@/components/Cards/RestaurantsCardList"
 
 
@@ -10,6 +11,7 @@ const SwigyCorporate:React.FC = () => {
   
     return (
         <div>
+            <HomePageTopBanner />
             <RestaurantsCardList />
             
             

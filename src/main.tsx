@@ -7,8 +7,8 @@ import SwigyCorporate from './Pages/SwigyCorporate'
 import { Search } from 'lucide-react'
 import Offers from './Pages/Offers'
 import Help from './Pages/Help'
-import SignIn from './Pages/SignIn'
-import Cart from './Pages/Cart'
+import SignIn from './Pages/SignUp'
+import Cart from './Pages/CartPage'
 import RestaurantsMenu from './components/Cards/RestaurantsMenu'
 
 

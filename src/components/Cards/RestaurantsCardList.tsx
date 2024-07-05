@@ -4,6 +4,7 @@ import { Weather } from '@/data/types';
 import RestaurantCard from './RestaurantCard';
 import Shimmer from './Shimmer';
 import axios from 'axios';
+import { Carousel, CarouselContent, CarouselNext, CarouselPrevious } from '../ui/carousel';
 
 
 
@@ -11,7 +12,7 @@ import axios from 'axios';
 
 const RestaurantsCardList = () => {
   const [restaurants, setRestaurants] = useState<Weather[]>([]);
-  const [searchText, setSearchText] = useState<string>('')
+  // const [searchText, setSearchText] = useState<string>('')
   const [filteredRestaurant, setFilteredRestaurant] = useState<Weather[]>([])
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -27,9 +28,10 @@ const RestaurantsCardList = () => {
       try {
         console.log('Fetching restaurants...');
         const response = await axios.get('https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.65200&lng=77.16630&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING');
-        console.log('API response data:', response.data);
+        console.log('API response restaurantsData:', response.data);
         const restaurantsData = response.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants;
         if (restaurantsData && Array.isArray(restaurantsData)) {
+          console.log(restaurantsData)
           
           setRestaurants(restaurantsData);
           setFilteredRestaurant(restaurantsData);
@@ -75,14 +77,27 @@ const RestaurantsCardList = () => {
  
     <div>
       
+      <div className="w-[70%] m-auto bg-white mb-10  overflow-hidden bg-cover  relative">
+      <Carousel>
+        <h1 className="text-2xl font-bold my-7">Top restaurant chains in Gurgaon</h1>
+        <CarouselPrevious className="absolute top-[12px] left-[86%] z-10" />
+        <CarouselNext className="absolute  top-[12px] left-[90%]" />
+  <CarouselContent className="">
+    {restaurants.map((item) => (
 
-        <div className='w-full mt-5 p-4'>
-          <input type="text" value={searchText} className='border-1 bg-orange-600' onChange={((e) => setSearchText(e.target.value))} />
-          <button className='bg-orange-600 p-1 rounded-xl' onClick={(() => {
-            const filteredRestaurants = restaurants.filter((restaurant) => restaurant.info.name.toLowerCase().includes(searchText.toLowerCase()))
-            setFilteredRestaurant(filteredRestaurants)
-            })}>Search</button>
-        </div>
+      <div className='flex px-4' key={item.info.id}>
+        
+            <RestaurantCard restaurant={item} />
+   
+            </div>
+    ))
+}
+  </CarouselContent>
+  
+</Carousel>
+
+    </div>
+       
 
       <div className='flex flex-wrap gap-5 mb-10 px-20 items-center justify-center'>
         {filteredRestaurant?.map((restaurant) => (
