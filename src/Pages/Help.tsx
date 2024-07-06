@@ -1,8 +1,9 @@
+import HelpSection from "@/components/HelpComponent/HelpSection";
 
 const Help = () => {
   return (
     <div>
-      <h1>Help</h1>
+      <HelpSection />
     </div>
   )
 };

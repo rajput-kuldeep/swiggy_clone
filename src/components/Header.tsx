@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import useOnlineStatus from '@/utils/useOnlineStatus'
+
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import LoginForm from './Signup/LoginForm'
@@ -7,7 +7,7 @@ import LoginForm from './Signup/LoginForm'
 
 const Header: React.FC = () => {
 
-    const onlineStatus = useOnlineStatus()
+ 
 
     const cartItems = useSelector((store) => store.cart.items)
 
@@ -25,10 +25,7 @@ const Header: React.FC = () => {
                 <div>
 
                     <ul className="flex gap-12 text-lg font-semibold ">
-                        <li>
-                            <h1>status : {onlineStatus ? 'online' : 'offline'}</h1>
-                        </li>
-
+                       
                         <li><NavLink to='/'>Swigy Corporate</NavLink> </li>
 
 

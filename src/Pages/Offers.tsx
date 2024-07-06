@@ -1,4 +1,5 @@
-import HelpSection from "@/components/HelpComponent/HelpSection"
+
+
 
 const Offers = () => {
 
@@ -9,7 +10,7 @@ const Offers = () => {
 
   return (
     <div>
-      <HelpSection />
+
     </div>
   )
 }
