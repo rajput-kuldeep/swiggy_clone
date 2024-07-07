@@ -1,6 +1,7 @@
 
 import HomePageTopBanner from "@/components/Cards/HomePageTopBanner"
 import RestaurantsCardList from "@/components/Cards/RestaurantsCardList"
+import FooterPartOne from "@/components/Footer/FooterPartOne"
 
 
 import React from "react"
@@ -13,6 +14,7 @@ const SwigyCorporate:React.FC = () => {
         <div>
             <HomePageTopBanner />
             <RestaurantsCardList />
+            <FooterPartOne />
             
             
 

@@ -7,7 +7,7 @@ interface MenuCardProps {
 }
 const MenuHeader:React.FC<MenuCardProps> = ({menuHeader} : MenuCardProps) => {
   return (
-    <div>
+    <div className="">
          <h1>{menuHeader.card.info?.name}</h1>
     </div>
   )

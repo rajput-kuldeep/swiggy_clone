@@ -22,7 +22,7 @@ const handleAddItem = (item: ItemCardsEntity) => {
 
 
     return (
-       <div>
+       <div className="">
         {
             items.map((item) => (
                 <div className="" key={item.card.info.id}>
