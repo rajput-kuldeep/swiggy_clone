@@ -190,7 +190,6 @@ const RestaurantsCardList = () => {
           ))
         }
       </div>
-
       </div>
     </div>
 
