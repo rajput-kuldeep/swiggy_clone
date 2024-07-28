@@ -1,25 +1,28 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
+import { useSelector, TypedUseSelectorHook } from 'react-redux';
+import { useState } from 'react';
+import LoginForm from './Signup/LoginForm';
 
-import { useSelector, TypedUseSelectorHook, } from 'react-redux'
-import { useState } from 'react'
-import LoginForm from './Signup/LoginForm'
+interface CartItem {
+  // Define the shape of a cart item
+  id: number;
+  name: string;
+  price: number;
+}
 
 interface RootState {
-    cart: {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      items: any[];
-    };
-  }
-   const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
+  cart: {
+    items: CartItem[];
+  };
+}
+
+const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector<RootState>;
+
 const Header: React.FC = () => {
-   
+  const cartItems = useTypedSelector((store) => store.cart.items);
+  console.log("this is cartItems", cartItems);
 
- 
-
-    const cartItems = useTypedSelector((store) => store.cart.items);
-    console.log("this is cartItems", cartItems)
-
-    const [login, setLogin] = useState<boolean>(false)
+  const [login, setLogin] = useState<boolean>(false);
 
 
     return (
