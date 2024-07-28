@@ -5,11 +5,20 @@ import { useState } from 'react'
 import LoginForm from './Signup/LoginForm'
 
 
+
+interface RootState {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    cart: any
+    header: {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      items: any[]
+    }
+  }
 const Header: React.FC = () => {
 
  
 
-    const cartItems = useSelector((store) => store.cart.items)
+    const cartItems = useSelector((store:RootState) => store.cart.items)
 
     console.log("this is cartItems", cartItems)
 
