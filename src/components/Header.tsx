@@ -7,8 +7,11 @@ import LoginForm from './Signup/LoginForm'
 
 
 interface RootState {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    cart: any
+    
+    cart: {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        items: any[] // or specify a more specific type if you know what type of items are in the cart
+      }
     header: {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       items: any[]
@@ -18,7 +21,8 @@ const Header: React.FC = () => {
 
  
 
-    const cartItems = useSelector((store:RootState) => store.cart.items)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const cartItems = useSelector<RootState>((store) => store.cart.items) as any[];
 
     console.log("this is cartItems", cartItems)
 
