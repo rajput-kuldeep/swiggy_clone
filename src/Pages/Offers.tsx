@@ -4,10 +4,6 @@
 const Offers = () => {
 
 
-
-  
-
-
   return (
     <div>
 

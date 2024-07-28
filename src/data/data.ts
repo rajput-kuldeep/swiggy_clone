@@ -266,14 +266,14 @@ export interface CardGroupMap {
   REGULAR: REGULAR;
 }
 export interface REGULAR {
-  cards?: (CardsEntity1)[] | null;
+  cards?: (CardsEntity1)[];
 }
 export interface CardsEntity1 {
   card: Card2;
 }
 export interface Card2 {
   card: Card3;
-  relevance?: Relevance1 | null;
+  relevance?: Relevance1;
 }
 export interface Card3 {
   "@type": string;

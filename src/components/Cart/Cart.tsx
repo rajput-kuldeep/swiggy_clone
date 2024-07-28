@@ -2,12 +2,17 @@ import { useSelector } from "react-redux"
 import MenuCard from "../Cards/MenuCard"
 import { Button } from "../ui/button"
 
-
+interface RootState {
+    cart: {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      items: any[]
+    }
+  }
 
 const Cart = () => {
 
 
-    const cartItems = useSelector((store) => store.cart.items)
+    const cartItems = useSelector((store : RootState) => store.cart.items)
     console.log("cartItem", cartItems)
 
 if (cartItems.length === 0) {

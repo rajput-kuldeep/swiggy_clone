@@ -68,7 +68,7 @@ const HomePageTopBanner = () => {
         <CarouselContent className="w-full">
           {restaurants.map((item) => (
             <div className="flex ">
-              <Link to={item.action.link} className="w-32 mx-2 my-8" > <img src={CDN_URL + item.imageId} alt="mindImg" className="w-60 mx-2 my-8" key={item.id} /></Link>
+              <Link to={item.action.link} key={item.imageId} className="w-32 mx-2 my-8" > <img src={CDN_URL + item.imageId} alt="mindImg" className="w-60 mx-2 my-8" key={item.id} /></Link>
             </div>
 
           ))

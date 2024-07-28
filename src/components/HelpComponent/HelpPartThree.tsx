@@ -6,18 +6,33 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion"
 import useFaq from "@/utils/useFaq";
+import { ReactNode } from "react";
 
 interface TODO {
+    hyperLinkText: ReactNode;
     title: string;
     description: string;
     id: number
+}
+interface APIResponse {
+    data: {
+        issues: {
+            data: TODO[]
+        }
+    }
 }
 
 
 const HelpPartThree = () => {
 
 
-    const data = useFaq<TODO[]>("https://www.swiggy.com/dapi/support/issues/faq?", [])
+    const data = useFaq<APIResponse>("https://www.swiggy.com/dapi/support/issues/faq?", {
+        data: {
+            issues: {
+                data: []
+            }
+        }
+    })
     console.log("onboarding", data)
 
 

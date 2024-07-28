@@ -3,7 +3,7 @@ import HelpSection from "@/components/HelpComponent/HelpSection";
 const Help = () => {
   return (
     <div>
-      <HelpSection />
+      <HelpSection children={undefined} />
     </div>
   )
 };

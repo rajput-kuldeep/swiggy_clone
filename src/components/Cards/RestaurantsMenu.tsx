@@ -1,7 +1,6 @@
 
 import { useParams } from "react-router-dom";
 import useRestaurantMenu from "@/utils/useRestaurantMenu";
-
 import {
   Accordion,
   AccordionContent,
@@ -9,18 +8,16 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 
-
 import { useContext } from "react";
 import UserContext from "@/utils/UserContext";
 import MenuCard from "./MenuCard";
 import Shimmer from "./Shimmer";
-import MenuHeader from "./MenuHeader";
-import { Card } from "../ui/card";
+// import { ItemCardsEntity } from "@/data/data";
 
 
 
 
-const RestaurantsMenu = () => {
+const RestaurantsMenu = ( ) => {
 
   const { resId } = useParams()
 
@@ -35,16 +32,13 @@ const RestaurantsMenu = () => {
 
   if (resInfo === null) return <Shimmer />
 
-  // const categories = resInfo?.card?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter((cards) => cards?.card?.card["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory")
 
+  const categories = resInfo?.data.cards?.at(5)?.groupedCard?.cardGroupMap.REGULAR.cards?.filter((cards) => cards?.card.card["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory")
+  
 
+  console.log("this is resinfo", categories)
 
-  const categories = resInfo?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter((cards) => cards?.card?.card["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory")
-
-
-  console.log("this is resinfo", typeof categories, categories)
-
-  const menuHeader = resInfo?.data?.cards[2]?.card?.card?.info
+  const menuHeader = resInfo?.data?.cards?.at(2)?.card?.card?.info
 
   console.log("this is menuHeader", typeof menuHeader, menuHeader)
 
@@ -70,7 +64,7 @@ const RestaurantsMenu = () => {
             <div className="border-[1px]"></div>
             <div className="text-sm font-medium text-gray-500 flex gap-2">
               <p>{menuHeader?.sla.lastMileTravelString}</p>
-              <p>₹{(menuHeader?.feeDetails.totalFee) / 100}Delivery fee will apply</p>
+              <p>₹{menuHeader?.feeDetails?.message}Delivery fee will apply</p>
             </div>
           </div>
         </div>
@@ -80,27 +74,27 @@ const RestaurantsMenu = () => {
       <div>
 
         {
-          categories.map((item) => (
+          categories?.map((item) => (
             <div key={item.card.card.title} className="bg-blue">
 
 
-              <Accordion type="single" collapsible>
-                <AccordionItem value="item-1">
-                  <div className="mt-10 px-5">
-                    <AccordionTrigger>{item.card.card.title} ({item.card.card.itemCards.length})</AccordionTrigger>
-                  </div>
-                  <AccordionContent>
+            <Accordion type="single" collapsible>
+              <AccordionItem value="item-1">
+                <div className="mt-10 px-5">
+                  <AccordionTrigger>{item.card.card.title} ({item.card.card.itemCards?.length})</AccordionTrigger>
+                </div>
+                <AccordionContent>
 
-                    <MenuCard items={item.card.card.itemCards} />
-
-
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
+                {item.card.card.itemCards && <MenuCard items={item.card.card.itemCards} />}
 
 
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
 
-            </div>
+
+
+          </div>
           ))
         }
 

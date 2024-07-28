@@ -12,12 +12,25 @@ interface TODO {
     description: string;
     id: number
 }
+interface APIResponse {
+    data: {
+        issues: {
+            data: TODO[]
+        }
+    }
+}
 
 
 const HelpPartTwo = () => {
 
 
-    const data = useLegal<TODO[]>("https://www.swiggy.com/dapi/support/issues/legal?", [])
+    const data = useLegal<APIResponse>("https://www.swiggy.com/dapi/support/issues/legal?", {
+        data: {
+            issues: {
+                data: []
+            }
+        }
+    })
     console.log("Legal", data)
 
 
