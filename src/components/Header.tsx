@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 
-import { useSelector, TypedUseSelectorHook } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import LoginForm from './Signup/LoginForm'
 
@@ -19,13 +19,13 @@ interface RootState {
     }
   }
 
-  const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
+ 
 const Header: React.FC = () => {
 
  
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const cartItems = useTypedSelector((store: RootState) => store.cart.items);
+    const cartItems = useSelector<RootState, any[]>((store) => store.cart.items);
 
     console.log("this is cartItems", cartItems)
 
