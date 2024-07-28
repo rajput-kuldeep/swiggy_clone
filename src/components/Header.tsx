@@ -10,8 +10,9 @@ interface RootState {
       items: any[];
     };
   }
+   const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 const Header: React.FC = () => {
-    const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
+   
 
  
 
