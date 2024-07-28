@@ -1,32 +1,21 @@
 import { NavLink } from 'react-router-dom'
 
-import { useSelector } from 'react-redux'
+import { useSelector, TypedUseSelectorHook, } from 'react-redux'
 import { useState } from 'react'
 import LoginForm from './Signup/LoginForm'
 
-
-
 interface RootState {
-    
     cart: {
-       
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        items: any[]
-      }
-    header: {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      items: any[]
-    }
+      items: any[];
+    };
   }
-
- 
 const Header: React.FC = () => {
+    const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
  
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const cartItems = useSelector<RootState, any[]>((store) => store.cart.items);
-
+    const cartItems = useTypedSelector((store) => store.cart.items);
     console.log("this is cartItems", cartItems)
 
     const [login, setLogin] = useState<boolean>(false)
