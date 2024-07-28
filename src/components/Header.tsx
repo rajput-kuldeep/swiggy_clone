@@ -25,7 +25,7 @@ const Header: React.FC = () => {
  
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const cartItems = useTypedSelector((store) => store.cart.items);
+    const cartItems = useTypedSelector((store: RootState) => store.cart.items);
 
     console.log("this is cartItems", cartItems)
 
